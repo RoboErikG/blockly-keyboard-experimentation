@@ -1169,7 +1169,8 @@ export class Navigation {
   canCurrentlyNavigate(workspace: Blockly.WorkspaceSvg) {
     return (
       workspace.keyboardAccessibilityMode &&
-      this.getState(workspace) !== Constants.STATE.NOWHERE
+      this.getState(workspace) !== Constants.STATE.NOWHERE &&
+      !workspace.isDragging()
     );
   }
 

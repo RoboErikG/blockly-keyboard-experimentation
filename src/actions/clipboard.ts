@@ -137,7 +137,7 @@ export class Clipboard {
       if (curNode && curNode.getSourceBlock()) {
         const sourceBlock = curNode.getSourceBlock();
         return !!(
-          !Gesture.inProgress() &&
+          !workspace.isDragging() &&
           sourceBlock &&
           sourceBlock.isDeletable() &&
           sourceBlock.isMovable() &&
@@ -239,7 +239,7 @@ export class Clipboard {
         return !!(
           source?.isDeletable() &&
           source?.isMovable() &&
-          !Gesture.inProgress()
+          !workspace.isDragging()
         );
       }
       case Constants.STATE.FLYOUT: {
@@ -248,7 +248,7 @@ export class Clipboard {
           ?.getCursor()
           ?.getCurNode()
           ?.getSourceBlock();
-        return !!(sourceBlock && !Gesture.inProgress());
+        return !!(sourceBlock && !workspace.isDragging());
       }
       default:
         return false;
@@ -355,7 +355,8 @@ export class Clipboard {
   private pastePrecondition(workspace: WorkspaceSvg) {
     if (!this.copyData || !this.copyWorkspace) return false;
 
-    return this.navigation.canCurrentlyEdit(workspace) && !Gesture.inProgress();
+    return this.navigation.canCurrentlyEdit(workspace) &&
+      !workspace.isDragging();
   }
 
   /**
